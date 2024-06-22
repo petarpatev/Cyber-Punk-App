@@ -8,5 +8,5 @@ const homeTemplate = () => html`
     `
 
 export const homeView = (ctx) => {
-    
+    ctx.render(homeTemplate());
 }
