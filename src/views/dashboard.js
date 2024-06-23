@@ -1,46 +1,33 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
+import * as itemsService from "../api/items.js";
 
-const dashboardTemplate = () => html`
+const dashboardTemplate = (items) => html`
     <h3 class="heading">Market</h3>
         <section id="dashboard">
-          <!-- Display a div with information about every post (if any)-->
-          <div class="item">
-            <img src="./images/tablet.png" alt="example1" />
-            <h3 class="model">Synoptic Eye Tablet</h3>
-            <div class="item-info">
-              <p class="price">Price: €1000</p>
-              <p class="availability">
-                Premium retailers, exclusive online stores
-              </p>
-              <p class="type">Type: Premium Tech</p>
-            </div>
-            <a class="details-btn" href="#">Uncover More</a>
-          </div>
-          <div class="item">
-            <img src="./images/controller.png" alt="example1" />
-            <h3 class="model">Neural Impulse Controller</h3>
-            <div class="item-info">
-              <p class="price">Price: €799</p>
-              <p class="availability">Underground black markets</p>
-              <p class="type">Type: Experimental</p>
-            </div>
-            <a class="details-btn" href="#">Uncover More</a>
-          </div>
-          <div class="item">
-            <img src="./images/drone.png" alt="example1" />
-            <h3 class="model">Sky Seeker Drone</h3>
-            <div class="item-info">
-              <p class="price">Price: €1200</p>
-              <p class="availability">Mass-Market Retail, Online Marketplace</p>
-              <p class="type">Type: Advanced Surveillance</p>
-            </div>
-            <a class="details-btn" href="#">Uncover More</a>
-          </div>
+          ${items.length > 0
+    ? items.map(itemTemplate)
+    : html`<h3 class="empty">No Items Yet</h3>`
+  }
         </section>
-        <!-- Display an h2 if there are no posts -->
-        <h3 class="empty">No Items Yet</h3>
+        
     `
 
-export const dashboardView = (ctx) => {
-    ctx.render(dashboardTemplate());
+const itemTemplate = (item) => html`
+<div class="item">
+            <img src=${item.imageUrl} alt="example1" />
+            <h3 class="model">${item.item}</h3>
+            <div class="item-info">
+              <p class="price">Price: ${item.price}</p>
+              <p class="availability">${item.availability}</p>
+              <p class="type">Type: ${item.type}</p>
+            </div>
+            <a class="details-btn" href="/details/${item._id}">Uncover More</a>
+          </div>
+`
+
+export const dashboardView = async (ctx) => {
+
+  const items = await itemsService.getAll();
+  ctx.render(dashboardTemplate(items));
+
 }
