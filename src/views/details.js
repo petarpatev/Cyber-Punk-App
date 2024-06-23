@@ -1,38 +1,37 @@
-import { html } from "../../node_modules/lit-html/lit-html.js";
+import { html, nothing } from "../../node_modules/lit-html/lit-html.js";
 
-const detailsTemplate = () => html`
+const detailsTemplate = (item, isCreator) => html`
     <section id="details">
           <div id="details-wrapper">
             <div>
-              <img id="details-img" src="./images/drone.png" alt="example1" />
-              <p id="details-title">Drone</p>
+              <img id="details-img" src=${item.imageUrl} alt="example1" />
+              <p id="details-title">${item.item}</p>
             </div>
             <div id="info-wrapper">
               <div id="details-description">
-                <p class="details-price">Price: €1200</p>
+                <p class="details-price">Price: €${item.price}</p>
                 <p class="details-availability">
-                  Mass-Market Retail, Online Marketplace
+                  ${item.availability}
                 </p>
-                <p class="type">Type: Advanced Surveillance</p>
+                <p class="type">Type: ${item.type}</p>
                 <p id="item-description">
-                  The Sky Seeker is an invaluable tool for exploration and
-                  surveillance. Its compact size and maneuverability make it
-                  ideal for navigating tight spaces and gathering data, while
-                  its high-resolution cameras provide clear images even in
-                  low-light conditions. With the Sky Seeker, you can stay ahead
-                  of the curve in the ever-changing world of cyberpunk.
+                  ${item.description}
                 </p>
               </div>
-              <!--Edit and Delete are only for creator-->
-              <div id="action-buttons">
-                <a href="" id="edit-btn">Edit</a>
-                <a href="" id="delete-btn">Delete</a>
-              </div>
+              ${isCreator
+                ? html`
+                    <div id="action-buttons">
+                      <a href="/edit/${item._id}" id="edit-btn">Edit</a>
+                      <a href="javascript:void(0)" id="delete-btn">Delete</a>
+                    </div>`
+                : nothing
+              }
             </div>
           </div>
         </section>
     `
 
 export const detailsView = (ctx) => {
-    ctx.render(detailsTemplate());
+    const isCreator = ctx.item._ownerId == ctx.user._id;
+    ctx.render(detailsTemplate(ctx.item, isCreator));
 }

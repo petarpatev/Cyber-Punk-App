@@ -3,6 +3,7 @@ import page from "../node_modules/page/page.mjs";
 import { addRenderContext } from "./middlewares/render.js";
 import { addSession } from "./middlewares/session.js";
 import { onNavigate } from "./middlewares/navigation.js";
+import { preload } from "./middlewares/preload.js";
 
 import { dashboardView } from "./views/dashboard.js";
 import { homeView } from "./views/home.js";
@@ -24,6 +25,6 @@ page('/login', loginView);
 page('/logout', onLogout);
 page('/create', createView);
 page('/edit/:itemId', editView);
-page('/details/:itemId', detailsView);
+page('/details/:itemId', preload, detailsView);
 
 page.start();

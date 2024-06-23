@@ -17,7 +17,7 @@ const itemTemplate = (item) => html`
             <img src=${item.imageUrl} alt="example1" />
             <h3 class="model">${item.item}</h3>
             <div class="item-info">
-              <p class="price">Price: ${item.price}</p>
+              <p class="price">Price: €${item.price}</p>
               <p class="availability">${item.availability}</p>
               <p class="type">Type: ${item.type}</p>
             </div>
