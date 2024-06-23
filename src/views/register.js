@@ -1,10 +1,12 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
+import * as utils from "../utils.js";
+import * as auth from "../api/authentication.js";
 
-const registerTemplate = () => html`
+const registerTemplate = (onSubmit) => html`
     <section id="register">
           <div class="form">
             <h2>Register</h2>
-            <form class="register-form">
+            <form @submit=${onSubmit} class="register-form">
               <input
                 type="text"
                 name="email"
@@ -24,12 +26,22 @@ const registerTemplate = () => html`
                 placeholder="repeat password"
               />
               <button type="submit">register</button>
-              <p class="message">Already registered? <a href="#">Login</a></p>
+              <p class="message">Already registered? <a href="/login">Login</a></p>
             </form>
           </div>
         </section>
     `
 
+const onSubmit = async (ctx, formData, event) => {
+  if (utils.isValid(formData)) {
+    await auth.register(formData.email, formData.password);
+    event.target.reset();
+    ctx.page.redirect('/');
+  } else {
+    alert('All fields are required');
+  }
+}
+
 export const registerView = (ctx) => {
-    ctx.render(registerTemplate());
+  ctx.render(registerTemplate(utils.submitWrapper(ctx, onSubmit)));
 }
