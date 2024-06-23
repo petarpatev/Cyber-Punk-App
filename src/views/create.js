@@ -1,10 +1,12 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
+import * as itemsService from "../api/items.js";
+import * as utils from "../utils.js";
 
-const createTemplate = () => html`
+const createTemplate = (onSubmit) => html`
     <section id="create">
           <div class="form form-item">
             <h2>Share Your item</h2>
-            <form class="create-form">
+            <form @submit=${onSubmit} class="create-form">
               <input type="text" name="item" id="item" placeholder="Item" />
               <input
                 type="text"
@@ -43,6 +45,18 @@ const createTemplate = () => html`
         </section>
     `
 
+const onSubmit = async (ctx, formData, event) => {
+
+  if (utils.isValid(formData)) {
+    await itemsService.create(formData);
+    event.target.reset();
+    ctx.page.redirect('/dashboard');
+  } else {
+    alert('All fields are required');
+  }
+
+}
+
 export const createView = (ctx) => {
-    ctx.render(createTemplate());
+  ctx.render(createTemplate(utils.submitWrapper(ctx, onSubmit)));
 }
