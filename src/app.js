@@ -9,6 +9,7 @@ import { registerView } from "./views/register.js";
 import { createView } from "./views/create.js";
 import { editView } from "./views/edit.js";
 import { detailsView } from "./views/details.js";
+import { onLogout } from "./views/logout.js";
 
 
 page(addRenderContext);
@@ -17,6 +18,7 @@ page('/', homeView);
 page('/dashboard', dashboardView);
 page('/register', registerView);
 page('/login', loginView);
+page('/logout', onLogout);
 page('/create', createView);
 page('/edit/:itemId', editView);
 page('/details/:itemId', detailsView);
