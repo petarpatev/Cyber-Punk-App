@@ -5,6 +5,7 @@ const endpoints = {
     getAll: '/data/cyberpunk?sortBy=_createdOn%20desc',
     getOne: '/data/cyberpunk/',
     create: '/data/cyberpunk',
+    edit: '/data/cyberpunk/'
 }
 
 export const getAll = async () => {
@@ -17,4 +18,8 @@ export const getOne = async (itemId) => {
 
 export const create = async (data) => {
     return await api.post(endpoints.create, data)
+}
+
+export const edit = async (itemId, data) => {
+    return await api.put(endpoints.edit + itemId, data);
 }

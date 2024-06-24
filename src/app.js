@@ -24,7 +24,7 @@ page('/register', registerView);
 page('/login', loginView);
 page('/logout', onLogout);
 page('/create', createView);
-page('/edit/:itemId', editView);
+page('/edit/:itemId', preload, editView);
 page('/details/:itemId', preload, detailsView);
 
 page.start();
