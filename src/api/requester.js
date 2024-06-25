@@ -37,7 +37,7 @@ const request = async (method, url, data) => {
 
     } catch (err) {
 
-        alert(err.message);
+        utils.enableErrorBox(err.message);
         throw err;
 
     }

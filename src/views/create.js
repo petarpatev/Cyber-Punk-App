@@ -52,7 +52,7 @@ const onSubmit = async (ctx, formData, event) => {
     event.target.reset();
     ctx.page.redirect('/dashboard');
   } else {
-    alert('All fields are required');
+    utils.enableErrorBox("All fields are required!");
   }
 
 }

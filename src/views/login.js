@@ -29,7 +29,7 @@ const onSubmit = async (ctx, formData, event) => {
     event.target.reset();
     ctx.page.redirect('/');
   } else {
-    alert('All fields are required');
+    utils.enableErrorBox("All fields are required!");
   }
 }
 

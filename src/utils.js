@@ -32,3 +32,16 @@ export const submitWrapper = (ctx, handler) => {
 export const isValid = (data) => {
     return !Object.values(data).some(el => el == '');
 }
+
+export const enableErrorBox = (message) => {
+    const errorBox = document.querySelector('.notification');
+    const boxMessage = document.querySelector('.msg');
+
+    errorBox.style.display = "block";
+    boxMessage.textContent = message;
+
+    setTimeout(() => {
+        errorBox.style.display = "none";
+        boxMessage.textContent = "";
+    }, 3000);
+}
