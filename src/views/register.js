@@ -33,10 +33,12 @@ const registerTemplate = (onSubmit) => html`
     `
 
 const onSubmit = async (ctx, formData, event) => {
-  if (utils.isValid(formData)) {
+  if (utils.isValid(formData) && formData['re-password'] == formData.password) {
     await auth.register(formData.email, formData.password);
     event.target.reset();
     ctx.page.redirect('/');
+  } else if (formData['re-password'] != formData.password) {
+    utils.enableErrorBox("Passwords don\'t match!");
   } else {
     utils.enableErrorBox("All fields are required!");
   }
